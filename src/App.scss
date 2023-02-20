@@ -1,0 +1,27 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~react-bootstrap-sidebar-menu/dist/sidebar-menu";
+
+.main-wrapper {
+    width: 100%;
+    height: 100vh;
+    background: #f3f4f6;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+}
+
+.sidebar-menu {
+    padding-top: 0;
+    flex-direction: column;
+    grid-area: sidebar;
+    overflow-y: auto;
+}
+
+.main-header {
+    grid-area: header;
+    padding: 0.5rem;
+}
