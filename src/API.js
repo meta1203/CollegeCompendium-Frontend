@@ -4,12 +4,12 @@ const API_BASE = document.location.hostname === 'localhost' ? 'http://localhost:
 
 const tokenParams = {
   authorizationParams: {
-    audience: '<our api endpoint>',
-    scope: 'read'
+    audience: 'https://tcfc.us.to/cc_api',
+    scope: 'rw'
   }
 };
 
-export default {
+const API = {
   // save login token
   tokenProvider: null,
   setTokenProvider: function(tokenProvider) {
@@ -25,3 +25,5 @@ export default {
     });
   },
 };
+
+export default API;
