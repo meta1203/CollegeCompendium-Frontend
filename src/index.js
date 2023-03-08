@@ -13,7 +13,8 @@ root.render(
         domain='dev-yrjc5x2ila2084mu.us.auth0.com'
         clientId='fGEfhQw23cfGNHhZQSxd7PrLBgbckdY6'
         authorizationParams={{
-          redirect_uri: window.location.origin
+          redirect_uri: window.location.origin,
+          audience: 'https://tcfc.us.to/cc_api',
         }}
       >
         <App />

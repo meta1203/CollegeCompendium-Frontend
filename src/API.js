@@ -3,10 +3,7 @@
 const API_BASE = document.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://tcfc.us.to/cc_api';
 
 const tokenParams = {
-  authorizationParams: {
-    audience: 'https://tcfc.us.to/cc_api',
-    scope: 'rw'
-  }
+  authorizationParams: {}
 };
 
 const API = {
@@ -24,6 +21,18 @@ const API = {
       }
     });
   },
+
+  testToken: async function() {
+    const token = await this.tokenProvider(tokenParams);
+    console.log(token);
+    return fetch("https://dev-yrjc5x2ila2084mu.us.auth0.com/userinfo", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+  }
 };
+
+window.api = API;
 
 export default API;

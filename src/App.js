@@ -19,11 +19,15 @@ function App() {
     return "...";
   }
 
+  // force login if not
   if (!isAuthenticated) {
     loginWithRedirect();
-  } else {
-    API.setTokenProvider(getAccessTokenSilently);
+    return "...";
   }
+
+  API.setTokenProvider(getAccessTokenSilently);
+
+  API.testToken().then(console.log);
 
   return (
     <div className="main-wrapper" id="main-wrapper">
