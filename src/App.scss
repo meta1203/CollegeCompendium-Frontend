@@ -21,6 +21,10 @@
     overflow-y: auto;
 }
 
+.sidebar-menu-brand {
+    display: flex;
+}
+
 .main-header {
     grid-area: header;
     padding: 0.5rem;
