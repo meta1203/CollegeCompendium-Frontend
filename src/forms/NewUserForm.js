@@ -27,7 +27,7 @@ export default function(props){
             <Form.Label>Email*</Form.Label>
             <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
             <Form.Text className="text-muted">
-            We'll "never" share your email with anyone else. 😛
+            We'll definitely "never" share your email with anyone else. 😛
             </Form.Text>
           </Form.Group>
         </Row>   
