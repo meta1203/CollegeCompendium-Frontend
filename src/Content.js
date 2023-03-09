@@ -1,5 +1,6 @@
 import { Container } from "react-bootstrap";
 import { Route, Routes, Switch } from "react-router-dom";
+import NewUserForm from "./forms/NewUserForm";
 import PlaceholderIframe from './PlaceholderIframe';
 
 export default function Content(props) {
@@ -22,6 +23,9 @@ export default function Content(props) {
                 } />
                 <Route path="/extracurriculars" element={
                     <PlaceholderIframe src="https://public.meta1203.com/videos/one_through_ten.mp4" />
+                } />
+                <Route path="/new_user" element={
+                    <NewUserForm/>
                 } />
             </Routes>
         </Container>
