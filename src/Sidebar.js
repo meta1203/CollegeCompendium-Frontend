@@ -9,9 +9,9 @@ import useAPI from './useAPI';
 // for documentation on this portion
 
 const textStyle = {
-    "font-size": "0.75em",
-    "line-height": "1px",
-    "text-align": "center",
+    "fontSize": "0.75em",
+    "lineHeight": "1px",
+    "textAlign": "center",
 };
 
 export default function OurSidebar(props) {

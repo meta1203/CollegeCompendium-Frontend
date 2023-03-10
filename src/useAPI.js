@@ -5,8 +5,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 // TODO: change to real endpoint
 const API_BASE = document.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://tcfc.us.to/cc_api';
 
+// build an observer pattern as described by
+// https://stackoverflow.com/questions/57602715/react-custom-hooks-fetch-data-globally-and-share-across-components
+// to prevent an avalanche of requests to GET /student
+
+let globalUser = {};
+let observers = [];
+
+function setUser(newUser) {
+  globalUser = newUser;
+  observers.forEach(update => update(newUser));
+}
+
 export default function useAPI() {
-  const [user, setUser] = useState(null);
+  const [userState, setUserState] = useState(globalUser);
   const {
     isLoading, isAuthenticated,
     getAccessTokenSilently,
@@ -16,27 +28,35 @@ export default function useAPI() {
   useEffect(() => {
     if (isLoading || !isAuthenticated) return;
 
-    getAccessTokenSilently().then(token => {
-      return fetch(API_BASE + "/student", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    observers.push(setUserState);
+
+    if (Object.keys(globalUser).length === 0) {
+      getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/student", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }).then(resp => {
+        if (resp.ok) {
+          // user object is valid, so just set it
+          resp.json().then(remoteUser => setUser(remoteUser));
+        } else if (resp.status === 404) {
+          resp.json().then(remoteUser => {
+            // user object is incomplete, so
+            // copy it over and set `incomplete`
+            remoteUser.incomplete = true;
+            setUser(remoteUser);
+          });
+        } else {
+          console.error(resp);
         }
       });
-    }).then(resp => {
-      if (resp.ok) {
-        // user object is valid, so just set it
-        resp.json().then(remoteUser => setUser(remoteUser));
-      } else if (resp.status === 404) {
-        resp.json().then(remoteUser => {
-          // user object is incomplete, so
-          // copy it over and set `incomplete`
-          remoteUser.incomplete = true;
-          setUser(remoteUser);
-        });
-      } else {
-        console.error(resp);
-      }
-    });
+    }
+
+    return () => {
+      observers = observers.filter(update => update !== setUserState);
+    };
 
   }, [isLoading, isAuthenticated, getAccessTokenSilently]);
 
@@ -44,7 +64,7 @@ export default function useAPI() {
   return {
     // user object should always reflect what the
     // server has on its side
-    user,
+    user: userState,
 
     updateStudent: async function (studentObj) {
       return getAccessTokenSilently().then(token => {
