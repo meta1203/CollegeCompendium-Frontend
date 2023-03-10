@@ -125,7 +125,7 @@ export default function (props) {
         </Form.Group>
       </Row>
 
-      <Row>
+      <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Account Type*</Form.Label>
           <Form.Select defaultValue="Student" value={accType} onChange={(e) => setAccType(e.target.value)}>
@@ -144,7 +144,7 @@ export default function (props) {
 
       {accType === "Student" ?
       <>
-        <Row>
+        <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>High school*</Form.Label>
             <Form.Control id="highschool" value={newStudent.highschool} onChange={handleNewStudentChange} />
@@ -154,7 +154,7 @@ export default function (props) {
             <Form.Control id="college" value={newStudent.college} onChange={handleNewStudentChange} />
           </Form.Group>
         </Row>
-        <Row>
+        <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>ACT Score</Form.Label>
             <Form.Control id="actScore" value={newStudent.actScore} onChange={handleNewStudentChange} />
