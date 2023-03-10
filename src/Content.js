@@ -16,7 +16,12 @@ export default function Content(props) {
                 {user.id ?
                     <>
                         <Route path="/" exact={true} element={
-                            <h1>Hi! I'm the Index!</h1>
+                            <>
+                                <h1>Hi! I'm the Index!</h1>
+                                <p><b>Some fun facts about you:</b></p>
+                                <p>Your name is {user.firstName} {user.lastName}.</p>
+                                <p>You are registered as a {user.highschool ? "student" : "college administrator"}.</p>
+                            </>
                         } />
                         <Route path="/search" element={
                             <PlaceholderIframe src="https://public.meta1203.com/videos/rickroll.mp4" />
