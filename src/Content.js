@@ -8,7 +8,7 @@ export default function Content(props) {
     if (!user) return "...";
     return (
         <Container fluid className="pt-3" style={{
-            "overflow-y": "scroll",
+            "overflowY": "scroll",
         }}>
             <Routes>
                 {/* only show New User Experience

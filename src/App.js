@@ -25,7 +25,7 @@ function App() {
     return "...";
   }
 
-  if (!user) {
+  if (Object.keys(user).length === 0) {
     return "...";
   }
 
