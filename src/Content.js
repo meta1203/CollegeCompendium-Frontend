@@ -6,7 +6,6 @@ import useAPI from "./useAPI";
 
 export default function Content(props) {
     const { user } = useAPI();
-    if (!user) return "...";
     return (
         <Container fluid className="pt-3" style={{
             "overflowY": "scroll",
@@ -34,7 +33,7 @@ export default function Content(props) {
                     </>
                     :
                     <Route path="/" element={
-                        <h1>New User Experience :)</h1>
+                        <NewUserForm />
                     } />
                 }
             </Routes>

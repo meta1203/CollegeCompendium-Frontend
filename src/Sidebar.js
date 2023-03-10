@@ -32,7 +32,7 @@ export default function OurSidebar(props) {
                 </Sidebar.Header>
                 <Sidebar.Body>
                     <Sidebar.Nav>
-                        {user && user.id ?
+                        {user.id ?
                             <>
                                 <Sidebar.Nav.Link as={Link} to="/search">
                                     <Sidebar.Nav.Icon><MdSearch /></Sidebar.Nav.Icon>
