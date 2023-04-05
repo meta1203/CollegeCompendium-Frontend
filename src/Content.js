@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { Route, Routes, Switch } from "react-router-dom";
 import NewUserForm from "./forms/NewUserForm";
+import ProfileManagement from "./forms/ProfileManagement";
 import PlaceholderIframe from './PlaceholderIframe';
 import useAPI from "./useAPI";
 
@@ -27,7 +28,7 @@ export default function Content(props) {
                             <PlaceholderIframe src="https://public.meta1203.com/videos/rickroll.mp4" />
                         } />
                         <Route path="/profile" element={
-                            <PlaceholderIframe src="https://public.meta1203.com/videos/bad_apple_in_the_ocean.mp4" />
+                            <ProfileManagement/>
                         } />
                         <Route path="/course_work" element={
                             <PlaceholderIframe src="https://public.meta1203.com/videos/Le%20KAISER%20Has%20Arrived.mp4" />
