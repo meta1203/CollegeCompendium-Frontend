@@ -32,7 +32,7 @@ export default function useAPI() {
 
     if (Object.keys(globalUser).length === 0) {
       getAccessTokenSilently().then(token => {
-        return fetch(API_BASE + "/student", {
+        return fetch(API_BASE + "/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           }
