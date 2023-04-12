@@ -35,13 +35,21 @@ export default function (props) {
       createStudent({
         ...newUser,
         ...newStudent,
-        location: city + ", " + state
+        location: {
+          address: "",
+          latitude: "34.066017",
+          longitude: "-10.7905613"
+        }
       }).then(() => alert("new student created!"));
     } else if (accType === "College Administrator") {
       createAdmin({
         ...newUser,
         ...newCollege,
-        location: city + ", " + state
+        location: {
+          address: "",
+          latitude: "34.066017",
+          longitude: "-10.7905613"
+        }
       }).then(() => alert("new admin created!"));
     } else {
       alert("Something's sussy... ඞ");
