@@ -183,9 +183,14 @@ export default function (props) {
             })}
             getOptions={v => {
               // TODO: get by name from
-              return [];
+              return [{
+                value: "uuid1",
+                text: "value 1"
+              }, {
+                value: "uuid2",
+                text: "value 2"
+              }];
             }}
-
             />
         </Row>
         </>}

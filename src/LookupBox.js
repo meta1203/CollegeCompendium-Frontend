@@ -12,9 +12,9 @@ export default function LookupBox(props) {
   const [ value, setValue ] = useState("");
 
   return <div>
-    <Form.Group controlId={id}>
+    <Form.Group>
       <Form.Label for={`${id}-box`}>{label}</Form.Label>
-      <Form.Control id={`${id}-box`} value={null}
+      <Form.Control id={`${id}-box`} value={value} 
       onFocus={event => setListOpen(true)}
       onChange={event => setValue(event.target.value)} />
       {listOpen ?
@@ -22,11 +22,12 @@ export default function LookupBox(props) {
           <br />
           <select className='form-select' multiple onChange={event => {
             receiveChange(event.target.value);
-            setValue(event.target.textContent);
+            setValue(event.target.selectedOptions[0].text);
             setListOpen(false);
           }}>
             {getOptions(value).map(line => {
-              <option key={line.value} value={line.value}>{line.text}</option>
+              console.log("got line " + JSON.stringify(line));
+              return <option key={line.value} value={line.value}>{line.text}</option>
             })}
           </select>
         </>
