@@ -2,12 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import LookupBox from '../LookupBox';
 
 import { useState } from 'react';
 import useAPI from '../useAPI';
 
 export default function (props) {
-  const { 
+  const {
     user,
     createStudent,
     createAdmin,
@@ -60,7 +61,7 @@ export default function (props) {
     event.preventDefault();
 
     // clone new user object
-    let update = {...newUser};
+    let update = { ...newUser };
     // make the single change
     update[event.target.id] = event.target.value;
     // push changed object
@@ -71,7 +72,7 @@ export default function (props) {
     event.preventDefault();
 
     // clone new user object
-    let update = {...newStudent};
+    let update = { ...newStudent };
     // make the single change
     update[event.target.id] = event.target.value;
     // push changed object
@@ -82,7 +83,7 @@ export default function (props) {
     event.preventDefault();
 
     // clone new user object
-    let update = {...newCollege};
+    let update = { ...newCollege };
     // make the single change
     update[event.target.id] = event.target.value;
     // push changed object
@@ -120,19 +121,6 @@ export default function (props) {
         </Form.Group>
       </Row>
 
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City*</Form.Label>
-          <Form.Control value={city} onChange={(e) => setCity(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label>State*</Form.Label>
-          <Form.Control value={state} onChange={(e) => setState(e.target.value)} />
-        </Form.Group>
-      </Row>
-
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Account Type*</Form.Label>
@@ -151,29 +139,56 @@ export default function (props) {
       {/* show student vs college forms */}
 
       {accType === "Student" ?
-      <>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>High school*</Form.Label>
-            <Form.Control id="highschool" value={newStudent.highschool} onChange={handleNewStudentChange} />
-          </Form.Group>
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>College</Form.Label>
-            <Form.Control id="college" value={newStudent.college} onChange={handleNewStudentChange} />
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>ACT Score</Form.Label>
-            <Form.Control id="actScore" value={newStudent.actScore} onChange={handleNewStudentChange} />
-          </Form.Group>
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>SAT Score</Form.Label>
-            <Form.Control id="satScore" value={newStudent.satScore} onChange={handleNewStudentChange} />
-          </Form.Group>
-        </Row>
+        <>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridCity">
+              <Form.Label>City*</Form.Label>
+              <Form.Control value={city} onChange={(e) => setCity(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>State*</Form.Label>
+              <Form.Control value={state} onChange={(e) => setState(e.target.value)} />
+            </Form.Group>
+          </Row>
+          <hr />
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>High school*</Form.Label>
+              <Form.Control id="highschool" value={newStudent.highschool} onChange={handleNewStudentChange} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>College</Form.Label>
+              <Form.Control id="college" value={newStudent.college} onChange={handleNewStudentChange} />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>ACT Score</Form.Label>
+              <Form.Control id="actScore" value={newStudent.actScore} onChange={handleNewStudentChange} />
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>SAT Score</Form.Label>
+              <Form.Control id="satScore" value={newStudent.satScore} onChange={handleNewStudentChange} />
+            </Form.Group>
+          </Row>
         </>
-        : undefined}
+        :
+        <>
+        <Row>
+          <LookupBox id="college" label="College"
+          receiveChange={v => setNewCollege({
+              ...newCollege,
+              college: v
+            })}
+            getOptions={v => {
+              // TODO: get by name from
+              return [];
+            }}
+
+            />
+        </Row>
+        </>}
 
       <hr />
 
