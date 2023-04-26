@@ -105,5 +105,25 @@ export default function useAPI() {
       });
 
     },
+
+    createAdmin: async function (studentObj) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/admin", {
+          method: "POST",
+          body: JSON.stringify(studentObj),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      }).then(resp => {
+        if (!resp.ok) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      }).then(remoteAdmin => {
+        setUser(remoteAdmin);
+        return remoteAdmin;
+      });
+
+    },
   };
 }

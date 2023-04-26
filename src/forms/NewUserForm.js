@@ -10,6 +10,7 @@ export default function (props) {
   const { 
     user,
     createStudent,
+    createAdmin,
   } = useAPI();
 
   // form values
@@ -34,15 +35,22 @@ export default function (props) {
       createStudent({
         ...newUser,
         ...newStudent,
-        location: city + ", " + state
-      }).then(() => alert("new user created!"));
-    } else if (accType === "") {
-      alert("will create a college here at some point :/");
-      console.log({
-        ...newStudent,
+        location: {
+          address: "",
+          latitude: "34.066017",
+          longitude: "-10.7905613"
+        }
+      }).then(() => alert("new student created!"));
+    } else if (accType === "College Administrator") {
+      createAdmin({
+        ...newUser,
         ...newCollege,
-        location: city + ", " + state
-      });
+        location: {
+          address: "",
+          latitude: "34.066017",
+          longitude: "-10.7905613"
+        }
+      }).then(() => alert("new admin created!"));
     } else {
       alert("Something's sussy... ඞ");
     }
