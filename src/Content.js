@@ -3,6 +3,7 @@ import { Route, Routes, Switch } from "react-router-dom";
 import NewUserForm from "./forms/NewUserForm";
 import ProfileManagement from "./forms/ProfileManagement";
 import PlaceholderIframe from './PlaceholderIframe';
+import HomePage from "./forms/HomePage"
 import useAPI from "./useAPI";
 
 export default function Content(props) {
@@ -18,10 +19,7 @@ export default function Content(props) {
                     <>
                         <Route path="/" exact={true} element={
                             <>
-                                <h1>Hi! I'm the Index!</h1>
-                                <p><b>Some fun facts about you:</b></p>
-                                <p>Your name is {user.firstName} {user.lastName}.</p>
-                                <p>You are registered as a {user.highschool ? "student" : "college administrator"}.</p>
+                                <HomePage/>
                             </>
                         } />
                         <Route path="/search" element={
