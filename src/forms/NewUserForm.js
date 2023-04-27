@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import LookupBox from '../LookupBox';
+import LookupBox from '../parts/LookupBox';
 
 import { useState } from 'react';
 import useAPI from '../useAPI';
@@ -38,19 +38,14 @@ export default function (props) {
         ...newStudent,
         location: {
           address: "",
-          latitude: "34.066017",
-          longitude: "-10.7905613"
+          latitude: 0,
+          longitude: 0
         }
       }).then(() => alert("new student created!"));
     } else if (accType === "College Administrator") {
       createAdmin({
         ...newUser,
         ...newCollege,
-        location: {
-          address: "",
-          latitude: "34.066017",
-          longitude: "-10.7905613"
-        }
       }).then(() => alert("new admin created!"));
     } else {
       alert("Something's sussy... ඞ");

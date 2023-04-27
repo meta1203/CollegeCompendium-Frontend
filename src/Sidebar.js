@@ -46,10 +46,6 @@ export default function OurSidebar(props) {
                                     <Sidebar.Nav.Icon><HiOutlineDocumentText /></Sidebar.Nav.Icon>
                                     <Sidebar.Nav.Title>My Course Work</Sidebar.Nav.Title>
                                 </Sidebar.Nav.Link>
-                                <Sidebar.Nav.Link as={Link} to="/extracurriculars">
-                                    <Sidebar.Nav.Icon><MdSportsSoccer /></Sidebar.Nav.Icon>
-                                    <Sidebar.Nav.Title>My Extracurriculars</Sidebar.Nav.Title>
-                                </Sidebar.Nav.Link>
                             </>
                             :
                             undefined

@@ -106,11 +106,11 @@ export default function useAPI() {
 
     },
 
-    createAdmin: async function (studentObj) {
+    createAdmin: async function (caObj) {
       return getAccessTokenSilently().then(token => {
-        return fetch(API_BASE + "/admin", {
+        return fetch(API_BASE + "/collegeAdmin", {
           method: "POST",
-          body: JSON.stringify(studentObj),
+          body: JSON.stringify(caObj),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
