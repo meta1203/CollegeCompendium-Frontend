@@ -1,7 +1,6 @@
 import React from 'react';
 import Sidebar from 'react-bootstrap-sidebar-menu';
-import { MdSearch, MdOutlineAccountCircle, MdSportsSoccer } from "react-icons/md";
-import { HiOutlineDocumentText } from "react-icons/hi";
+import { MdSearch, MdOutlineAccountCircle, MdFavorite, MdSchool } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import useAPI from './useAPI';
 
@@ -16,6 +15,8 @@ const textStyle = {
 
 export default function OurSidebar(props) {
     const { user } = useAPI();
+    const shouldShow = user.id &&
+        ((typeof user.approved) === "undefined" || user.approved);
     return (
         <Sidebar variant="dark" bg="dark" expand="md">
             <Sidebar.Collapse>
@@ -32,21 +33,34 @@ export default function OurSidebar(props) {
                 </Sidebar.Header>
                 <Sidebar.Body>
                     <Sidebar.Nav>
-                        {user.id ?
-                            <>
-                                <Sidebar.Nav.Link as={Link} to="/search">
-                                    <Sidebar.Nav.Icon><MdSearch /></Sidebar.Nav.Icon>
-                                    <Sidebar.Nav.Title>Find Schools</Sidebar.Nav.Title>
-                                </Sidebar.Nav.Link>
-                                <Sidebar.Nav.Link as={Link} to="/profile">
-                                    <Sidebar.Nav.Icon><MdOutlineAccountCircle /></Sidebar.Nav.Icon>
-                                    <Sidebar.Nav.Title>My Profile</Sidebar.Nav.Title>
-                                </Sidebar.Nav.Link>
-                                <Sidebar.Nav.Link as={Link} to="/course_work">
-                                    <Sidebar.Nav.Icon><HiOutlineDocumentText /></Sidebar.Nav.Icon>
-                                    <Sidebar.Nav.Title>My Course Work</Sidebar.Nav.Title>
-                                </Sidebar.Nav.Link>
-                            </>
+                        {shouldShow ?
+                            (user.college ?
+                                <>
+                                    <Sidebar.Nav.Link as={Link} to="/manage_school">
+                                        <Sidebar.Nav.Icon><MdSchool /></Sidebar.Nav.Icon>
+                                        <Sidebar.Nav.Title>Manage School</Sidebar.Nav.Title>
+                                    </Sidebar.Nav.Link>
+                                    <Sidebar.Nav.Link as={Link} to="/interested">
+                                        <Sidebar.Nav.Icon><MdFavorite /></Sidebar.Nav.Icon>
+                                        <Sidebar.Nav.Title>Interested Students</Sidebar.Nav.Title>
+                                    </Sidebar.Nav.Link>
+                                </>
+                                :
+                                <>
+                                    <Sidebar.Nav.Link as={Link} to="/search">
+                                        <Sidebar.Nav.Icon><MdSearch /></Sidebar.Nav.Icon>
+                                        <Sidebar.Nav.Title>Find Schools</Sidebar.Nav.Title>
+                                    </Sidebar.Nav.Link>
+                                    <Sidebar.Nav.Link as={Link} to="/profile">
+                                        <Sidebar.Nav.Icon><MdOutlineAccountCircle /></Sidebar.Nav.Icon>
+                                        <Sidebar.Nav.Title>My Profile</Sidebar.Nav.Title>
+                                    </Sidebar.Nav.Link>
+                                    <Sidebar.Nav.Link as={Link} to="/favorites">
+                                        <Sidebar.Nav.Icon><MdFavorite /></Sidebar.Nav.Icon>
+                                        <Sidebar.Nav.Title>My Favorites</Sidebar.Nav.Title>
+                                    </Sidebar.Nav.Link>
+                                </>
+                            )
                             :
                             undefined
                         }

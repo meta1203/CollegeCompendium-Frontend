@@ -7,7 +7,7 @@ import LookupBox from '../parts/LookupBox';
 import { useState } from 'react';
 import useAPI from '../useAPI';
 
-export default function (props) {
+export default function NewUserForm () {
   const {
     user,
     createStudent,
@@ -82,7 +82,7 @@ export default function (props) {
     <Form onSubmit={handleSubmit}>
       <h2>Welcome! Let's get you started!</h2>
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Group as={Col} >
           <Form.Label>Email*</Form.Label>
           <Form.Control type="email" placeholder="Enter email" id="email" value={newUser.email} onChange={handleNewUserChange} />
           <Form.Text className="text-muted">
@@ -93,24 +93,24 @@ export default function (props) {
 
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>First Name*</Form.Label>
           <Form.Control id="firstName" value={newUser.firstName} onChange={handleNewUserChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridState">
+        <Form.Group as={Col} >
           <Form.Label>Middle Initial</Form.Label>
           <Form.Control id="middleInitial" value={newUser.middleInitial} onChange={handleNewUserChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridZip">
+        <Form.Group as={Col} >
           <Form.Label>Last Name*</Form.Label>
           <Form.Control id="lastName" value={newUser.lastName} onChange={handleNewUserChange} />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridState">
+        <Form.Group as={Col} >
           <Form.Label>Account Type*</Form.Label>
           <Form.Select defaultValue="Student" value={accType} onChange={(e) => setAccType(e.target.value)}>
             <option>Student</option>
@@ -129,33 +129,33 @@ export default function (props) {
       {accType === "Student" ?
         <>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCity">
+            <Form.Group as={Col} >
               <Form.Label>City*</Form.Label>
               <Form.Control value={city} onChange={(e) => setCity(e.target.value)} />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} >
               <Form.Label>State*</Form.Label>
               <Form.Control value={state} onChange={(e) => setState(e.target.value)} />
             </Form.Group>
           </Row>
           <hr />
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} >
               <Form.Label>High school*</Form.Label>
               <Form.Control id="highschool" value={newStudent.highschool} onChange={handleNewStudentChange} />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} >
               <Form.Label>College</Form.Label>
               <Form.Control id="college" value={newStudent.college} onChange={handleNewStudentChange} />
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} >
               <Form.Label>ACT Score</Form.Label>
               <Form.Control id="actScore" value={newStudent.actScore} onChange={handleNewStudentChange} />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} >
               <Form.Label>SAT Score</Form.Label>
               <Form.Control id="satScore" value={newStudent.satScore} onChange={handleNewStudentChange} />
             </Form.Group>
@@ -181,7 +181,8 @@ export default function (props) {
         </Row>
         </>}
 
-      <Button variant="primary" type="submit" onclick={handleSubmit}>
+      <br />
+      <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
     </Form>

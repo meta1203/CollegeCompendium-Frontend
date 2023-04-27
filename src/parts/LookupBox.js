@@ -8,13 +8,13 @@ export default function LookupBox(props) {
     getOptions,
     label,
   } = props;
-  const [ listOpen, setListOpen ] = useState(true);
+  const [ listOpen, setListOpen ] = useState(false);
   const [ value, setValue ] = useState("");
   const [ options, setOptions ] = useState([]);
 
   return <div>
     <Form.Group>
-      <Form.Label for={`${id}-box`}>{label}</Form.Label>
+      <Form.Label forHtml={`${id}-box`}>{label}</Form.Label>
       <Form.Control id={`${id}-box`} value={value} 
       onFocus={event => setListOpen(true)}
       onChange={event => { 
