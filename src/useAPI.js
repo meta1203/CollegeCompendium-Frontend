@@ -123,7 +123,36 @@ export default function useAPI() {
         setUser(remoteAdmin);
         return remoteAdmin;
       });
+    },
 
+    searchCollegeForName: async function (collegeName) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/search/colleges?name=" + collegeName, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchCollegeForId: async function (collegeId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/college/" + collegeId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
     },
   };
 }

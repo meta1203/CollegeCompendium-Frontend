@@ -10,13 +10,22 @@ export default function LookupBox(props) {
   } = props;
   const [ listOpen, setListOpen ] = useState(true);
   const [ value, setValue ] = useState("");
+  const [ options, setOptions ] = useState([]);
 
   return <div>
     <Form.Group>
       <Form.Label for={`${id}-box`}>{label}</Form.Label>
       <Form.Control id={`${id}-box`} value={value} 
       onFocus={event => setListOpen(true)}
-      onChange={event => setValue(event.target.value)} />
+      onChange={event => { 
+        setValue(event.target.value);
+        const newOptions = getOptions(event.target.value);
+        // test for promise
+        if (newOptions.then && (typeof newOptions.then) === "function")
+          newOptions.then(o => setOptions(o));
+        else
+          setOptions(newOptions);
+      }} />
       {listOpen ?
         <>
           <br />
@@ -25,10 +34,7 @@ export default function LookupBox(props) {
             setValue(event.target.selectedOptions[0].text);
             setListOpen(false);
           }}>
-            {getOptions(value).map(line => {
-              console.log("got line " + JSON.stringify(line));
-              return <option key={line.value} value={line.value}>{line.text}</option>
-            })}
+            {options.map(line => <option key={line.value} value={line.value}>{line.text}</option>)}
           </select>
         </>
         :

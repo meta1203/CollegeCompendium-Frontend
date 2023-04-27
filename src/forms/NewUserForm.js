@@ -12,6 +12,8 @@ export default function (props) {
     user,
     createStudent,
     createAdmin,
+    searchCollegeForName,
+    searchCollegeForId,
   } = useAPI();
 
   // form values
@@ -23,7 +25,9 @@ export default function (props) {
   });
 
   const [newStudent, setNewStudent] = useState({});
-  const [newCollege, setNewCollege] = useState({});
+  const [newCollege, setNewCollege] = useState({
+    approved: false
+  });
 
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -72,17 +76,6 @@ export default function (props) {
     update[event.target.id] = event.target.value;
     // push changed object
     setNewStudent(update);
-  }
-
-  function handleNewCollegeChange(event) {
-    event.preventDefault();
-
-    // clone new user object
-    let update = { ...newCollege };
-    // make the single change
-    update[event.target.id] = event.target.value;
-    // push changed object
-    setNewCollege(update);
   }
 
   return (
@@ -172,25 +165,21 @@ export default function (props) {
         <>
         <Row>
           <LookupBox id="college" label="College"
-          receiveChange={v => setNewCollege({
-              ...newCollege,
-              college: v
-            })}
-            getOptions={v => {
-              // TODO: get by name from
-              return [{
-                value: "uuid1",
-                text: "value 1"
-              }, {
-                value: "uuid2",
-                text: "value 2"
-              }];
+          receiveChange={v => 
+            searchCollegeForId(v).then(c => {
+              setNewCollege({
+                ...newCollege,
+                college: c
+              })
+            })
+          }
+            getOptions={async v => {
+              const colleges = await searchCollegeForName(v);
+              return colleges.map(c => { return { value: c.id, text: c.name }; });
             }}
             />
         </Row>
         </>}
-
-      <hr />
 
       <Button variant="primary" type="submit" onclick={handleSubmit}>
         Submit
