@@ -83,7 +83,6 @@ export default function useAPI() {
         setUser(remoteStudent);
         return remoteStudent;
       });
-
     },
 
     createStudent: async function (studentObj) {
@@ -125,9 +124,46 @@ export default function useAPI() {
       });
     },
 
+    updateCollege: async function (collegeObject) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/collegeAdmin/college", {
+          method: "PUT",
+          body: JSON.stringify(collegeObject),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      }).then(resp => {
+        if (!resp.ok) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      }).then(remoteCollege => {
+        setUser({
+          ...userState,
+          college: remoteCollege
+        });
+        return remoteCollege;
+      });
+    },
+
     searchCollegeForName: async function (collegeName) {
       return getAccessTokenSilently().then(token => {
         return fetch(API_BASE + "/search/colleges?name=" + collegeName, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchCollegesNearby: async function (distance) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/search/colleges/distance/" + distance, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

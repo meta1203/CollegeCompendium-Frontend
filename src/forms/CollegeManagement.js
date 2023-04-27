@@ -3,13 +3,15 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
+import CollegeFrame from '../parts/CollegeFrame';
 
 import { useState } from 'react';
 import useAPI from '../useAPI';
 
 export default function CollegeManagement() {
   const {
-    user
+    user,
+    updateCollege
   } = useAPI()
 
   const [college, setCollege] = useState(user.college);
@@ -27,12 +29,17 @@ export default function CollegeManagement() {
   }
 
   function handleObjChange(event) {
-    college[event.target.id] = event.target.value;
-    setCollege(college);
+    let updatedCollege = {...college};
+    updatedCollege[event.target.id] = event.target.value;
+    setCollege(updatedCollege);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    updateCollege(college).then(newCollege => {
+      alert("updated college!");
+      setCollege(newCollege);
+    });
   }
 
   return (
@@ -48,33 +55,33 @@ export default function CollegeManagement() {
       <hr />
       <Row className="mb-3">
         <h2> Your college's information</h2>
-        <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Group as={Col} >
           <Form.Label>College Name</Form.Label>
           <Form.Control id="name" value={college.name} onChange={handleObjChange} />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>College Website</Form.Label>
-          <Form.Control id="website" value={college.url} onChange={handleObjChange} />
+          <Form.Control id="url" value={college.url} onChange={handleObjChange} />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>In-State Cost</Form.Label>
           <Form.Control id="inStateCost" value={college.inStateCost} onChange={handleObjChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>Out-State Cost</Form.Label>
           <Form.Control id="outStateCost" value={college.outStateCost} onChange={handleObjChange} />
         </Form.Group>
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>Address</Form.Label>
           <Form.Control id="address" value={college.location.address} onChange={event => setCollege({
             ...college,
@@ -90,7 +97,7 @@ export default function CollegeManagement() {
       <Form.Label>Photos</Form.Label>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
 
           <Form.Text className="text-muted">
             URL:
@@ -99,7 +106,7 @@ export default function CollegeManagement() {
           <Form.Control id="url" value={url} onChange={handleURLChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Text className="text-muted">
             Add:
           </Form.Text>
@@ -112,7 +119,14 @@ export default function CollegeManagement() {
         <div>
           {college.photos.map(i => <img src={i} width="400px" height="auto" />)}
         </div>
-
+        
+      </Row>
+      <hr />
+      <Row>
+        <Col>
+        <h1>This is what your card looks like:</h1>
+        <div style={{width: "33%"}}><CollegeFrame college={college} /></div>
+        </Col>
       </Row>
       <hr />
 

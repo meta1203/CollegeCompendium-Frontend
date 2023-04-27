@@ -5,6 +5,7 @@ import CollegeManagement from "./forms/CollegeManagement";
 import ProfileManagement from "./forms/ProfileManagement";
 import PlaceholderIframe from './PlaceholderIframe';
 import useAPI from "./useAPI";
+import Search from "./Search";
 
 export default function Content(props) {
     const { user } = useAPI();
@@ -37,7 +38,7 @@ export default function Content(props) {
                         : 
                         <>
                         <Route path="/search" element={
-                            <PlaceholderIframe src="https://public.meta1203.com/videos/rickroll.mp4" />
+                            <Search />
                         } />
                         <Route path="/profile" element={
                             <ProfileManagement/>
