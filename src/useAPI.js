@@ -190,5 +190,35 @@ export default function useAPI() {
         return resp.json();
       });
     },
+
+    searchMajorsForName: async function (majorName) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/majors?name=" + majorName, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchMajorForId: async function (majorId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/major?id=" + majorId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
   };
 }

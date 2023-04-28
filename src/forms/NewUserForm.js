@@ -41,7 +41,7 @@ export default function NewUserForm () {
         ...newUser,
         ...newStudent,
         location: {
-          address: "",
+          address: city + ", " + state,
           latitude: 0,
           longitude: 0
         }
