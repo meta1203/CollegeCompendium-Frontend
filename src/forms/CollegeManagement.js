@@ -5,20 +5,23 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import CollegeFrame from '../parts/CollegeFrame';
 import LookupBox from "../parts/LookupBox";
+import { BsTrashFill } from "react-icons/bs";
 
 import { useState } from 'react';
 import useAPI from '../useAPI';
+import { Card, Container, ListGroup } from 'react-bootstrap';
 
 export default function CollegeManagement() {
   const {
     user,
     updateCollege,
-    searchMajorsForName
+    searchMajorsForName,
+    searchMajorForId,
   } = useAPI();
 
   const [college, setCollege] = useState(user.college);
   const [url, setUrl] = useState("");
-  const [degree, setDegree] = useState({});
+  const [degree, setDegree] = useState({ creditsRequired: 0, degreeType: "ASSOCIATE" });
 
   function addURL() {
     setCollege({
@@ -46,8 +49,10 @@ export default function CollegeManagement() {
   }
 
   function handleDegreeChange(event) {
-    let updatedDegree = {...degree};
+    let updatedDegree = { ...degree };
+    console.log(`degree.${event.target.id} -> ${event.target.value}`)
     updatedDegree[event.target.id] = event.target.value;
+    console.log(updatedDegree);
     setDegree(updatedDegree);
   }
 
@@ -106,46 +111,113 @@ export default function CollegeManagement() {
 
       <Row className="mb-3">
         <Col xs="6">
-          <Form.Label>Photos</Form.Label>
-          <Form.Group>
-            <Form.Text className="text-muted">URL:</Form.Text>
-            <Form.Control id="url" value={url} onChange={handleURLChange} />
-          </Form.Group>
+          <Card>
+            <ListGroup variant='flush'>
+              <ListGroup.Item>
+                <b>Photos</b>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col xs="10" md="11">
+                    <Form.Group>
+                      <Form.Label>URL:</Form.Label>
+                      <Form.Control id="url" value={url} onChange={handleURLChange} />
+                    </Form.Group>
+                  </Col>
 
-          <Form.Group>
-            <Form.Text className="text-muted">
-              Add:
-            </Form.Text>
-            <br />
-            <Button variant="dark" type="text" onClick={addURL}>+</Button>
-          </Form.Group>
-          <div>
-            {college.photos.map(i => <img src={i} width="400px" height="auto" />)}
-          </div>
+                  <Col xs="2" md="1">
+                    <Form.Group>
+                      <Form.Label className="text-muted">Add:</Form.Label>
+                      <br />
+                      <Button variant="dark" type="text" onClick={addURL}>+</Button>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+              {college.photos.map(i =>
+                <ListGroup.Item>
+                  <img src={i} width="400px" height="auto" />
+                </ListGroup.Item>
+              )}
+            </ListGroup>
+          </Card>
         </Col>
+
         <Col>
-          <Form.Label>Degrees</Form.Label>
-          <LookupBox id="major" label="Major" 
-          receiveChange={majorId => {
-            setDegree({
-              ...degree,
-              major: {
-                id: majorId,
-                name: null,
-                majorType: null,
-              }
-            })
-          }}
-          getOptions={async v => {
-            const majors = await searchMajorsForName(v);
-            return majors.map(m => {
-              return {value: m.id, text: m.name};
-            });
-          }} />
-          <Form.Group>
-            <Form.Text>Credits Required for Completion:</Form.Text>
-            <Form.Control id="creditsRequired" value={degree.creditsRequired} onChange={handleURLChange} type="number" />
-          </Form.Group>
+          <Card>
+            <ListGroup variant='flush'>
+              <ListGroup.Item>
+                <b>Degrees</b>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Form>
+                  <Row>
+                    <Col xs="6">
+                      <LookupBox id="major" label="Major"
+                        receiveChange={majorId => {
+                          searchMajorForId(majorId).then(m =>
+                            setDegree({
+                              ...degree,
+                              major: m
+                            }));
+                        }}
+                        getOptions={async v => {
+                          const majors = await searchMajorsForName(v);
+                          return majors.map(m => {
+                            return { value: m.id, text: m.name };
+                          });
+                        }} />
+                    </Col>
+                    <Col xs="3">
+                      <Form.Group>
+                        <Form.Label forHtml="degreeType">Degree Offered:</Form.Label>
+                        <Form.Select id="degreeType" value={degree.degreeType} onChange={handleDegreeChange}>
+                          <option value="ASSOCIATE">Associate's</option>
+                          <option value="BACHELOR">Bachelor's</option>
+                          <option value="MASTER">Master's</option>
+                          <option value="DOCTORATE">Doctorate</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col xs="2">
+                      <Form.Group>
+                        <Form.Label forHtml="creditsRequired">Credit Hours:</Form.Label>
+                        <Form.Control id="creditsRequired" value={degree.creditsRequired} onChange={handleDegreeChange} type="number" />
+                      </Form.Group>
+                    </Col>
+                    <Col xs="1">
+                      <Form.Group>
+                        <Form.Label>Add:</Form.Label>
+                        <Button variant="primary" type="submit"
+                          onClick={event => {
+                            event.preventDefault();
+                            console.log(degree);
+                            college.degrees.push({ ...degree });
+                            setDegree({});
+                            alert("added degree");
+                          }}>+</Button>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </Form>
+              </ListGroup.Item>
+              {college.degrees.map((d, i) =>
+                <ListGroup.Item key={i}>
+                  <Row>
+                    <Col xs="6"><b>{d.major.name}</b></Col>
+                    <Col xs="3">{d.degreeType}</Col>
+                    <Col xs="2">{d.creditsRequired}</Col>
+                    <Col xs="1"><Button variant="danger" onClick={event => {
+                      event.preventDefault();
+                      let updatedCollege = { ...college };
+                      updatedCollege.degrees = college.degrees.filter((v, i2) => i != i2);
+                      setCollege(updatedCollege);
+                    }}><BsTrashFill /></Button></Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
+            </ListGroup>
+          </Card>
         </Col>
       </Row>
       <hr />
@@ -161,4 +233,4 @@ export default function CollegeManagement() {
       </Row>
     </Form>
   );
-} 
+}

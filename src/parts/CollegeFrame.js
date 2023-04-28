@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const centerCrop = {
-  objectFit: "none",
+  objectFit: "cover",
   objectPosition: "center",
   maxHeight: "33vh",
   width: "100%"

@@ -1,5 +1,5 @@
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function LookupBox(props) {
   const {
@@ -8,25 +8,31 @@ export default function LookupBox(props) {
     getOptions,
     label,
   } = props;
-  const [ listOpen, setListOpen ] = useState(false);
-  const [ value, setValue ] = useState("");
-  const [ options, setOptions ] = useState([]);
+  const [listOpen, setListOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [options, setOptions] = useState([]);
+
+  function load(input) {
+    const newOptions = getOptions(input);
+    // test for promise
+    if (newOptions.then && (typeof newOptions.then) === "function")
+      newOptions.then(o => setOptions(o));
+    else
+      setOptions(newOptions);
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => load(value), []);
 
   return <div>
     <Form.Group>
       <Form.Label forHtml={`${id}-box`}>{label}</Form.Label>
-      <Form.Control id={`${id}-box`} value={value} 
-      onFocus={() => setListOpen(true)}
-      onBlur={() => setListOpen(false)}
-      onChange={event => { 
-        setValue(event.target.value);
-        const newOptions = getOptions(event.target.value);
-        // test for promise
-        if (newOptions.then && (typeof newOptions.then) === "function")
-          newOptions.then(o => setOptions(o));
-        else
-          setOptions(newOptions);
-      }} />
+      <Form.Control id={`${id}-box`} value={value}
+        onFocus={() => setListOpen(true)}
+        onChange={event => {
+          setValue(event.target.value);
+          load(event.target.value);
+        }} />
       {listOpen ?
         <>
           <br />
