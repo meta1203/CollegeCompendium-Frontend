@@ -191,6 +191,21 @@ export default function useAPI() {
       });
     },
 
+    searchCollegeForMajor: async function (majorId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/colleges/major?id=" + majorId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
     searchMajorsForName: async function (majorName) {
       return getAccessTokenSilently().then(token =>
         fetch(API_BASE + "/search/majors?name=" + majorName, {
@@ -220,5 +235,35 @@ export default function useAPI() {
         return resp.json();
       });
     },
+
+    addDegreeToCollege: async function (degreeObj) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/college/degree", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(degreeObj)
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    removeDegreeFromCollege: async function (degreeId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/college/degree/" + degreeId, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+      });
+    }
   };
 }

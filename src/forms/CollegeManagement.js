@@ -17,6 +17,8 @@ export default function CollegeManagement() {
     updateCollege,
     searchMajorsForName,
     searchMajorForId,
+    addDegreeToCollege,
+    removeDegreeFromCollege
   } = useAPI();
 
   const [college, setCollege] = useState(user.college);
@@ -159,7 +161,8 @@ export default function CollegeManagement() {
                             setDegree({
                               ...degree,
                               major: m
-                            }));
+                            })
+                          );
                         }}
                         getOptions={async v => {
                           const majors = await searchMajorsForName(v);
@@ -172,7 +175,7 @@ export default function CollegeManagement() {
                       <Form.Group>
                         <Form.Label forHtml="degreeType">Degree Offered:</Form.Label>
                         <Form.Select id="degreeType" value={degree.degreeType} onChange={handleDegreeChange}>
-                          <option value="ASSOCIATE">Associate's</option>
+                          <option selected value="ASSOCIATE">Associate's</option>
                           <option value="BACHELOR">Bachelor's</option>
                           <option value="MASTER">Master's</option>
                           <option value="DOCTORATE">Doctorate</option>
@@ -191,10 +194,14 @@ export default function CollegeManagement() {
                         <Button variant="primary" type="submit"
                           onClick={event => {
                             event.preventDefault();
+
                             console.log(degree);
-                            college.degrees.push({ ...degree });
-                            setDegree({});
-                            alert("added degree");
+                            addDegreeToCollege(degree).then(d => {
+                              let updatedCollege = { ...college };
+                              updatedCollege.degrees.push(d);
+                              setCollege(updatedCollege);
+                              setDegree({});
+                            });
                           }}>+</Button>
                       </Form.Group>
                     </Col>
@@ -202,16 +209,20 @@ export default function CollegeManagement() {
                 </Form>
               </ListGroup.Item>
               {college.degrees.map((d, i) =>
-                <ListGroup.Item key={i}>
+                <ListGroup.Item key={d.id}>
                   <Row>
                     <Col xs="6"><b>{d.major.name}</b></Col>
                     <Col xs="3">{d.degreeType}</Col>
                     <Col xs="2">{d.creditsRequired}</Col>
                     <Col xs="1"><Button variant="danger" onClick={event => {
                       event.preventDefault();
-                      let updatedCollege = { ...college };
-                      updatedCollege.degrees = college.degrees.filter((v, i2) => i != i2);
-                      setCollege(updatedCollege);
+
+                      removeDegreeFromCollege(d.id).then(() => {
+                        let updatedCollege = { ...college };
+                        updatedCollege.degrees = college.degrees.filter((v, i2) => i != i2);
+                        setCollege(updatedCollege);
+                      });
+
                     }}><BsTrashFill /></Button></Col>
                   </Row>
                 </ListGroup.Item>

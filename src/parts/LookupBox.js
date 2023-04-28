@@ -10,6 +10,7 @@ export default function LookupBox(props) {
   } = props;
   const [listOpen, setListOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [wasSelected, setWasSelected] = useState(false);
   const [options, setOptions] = useState([]);
 
   function load(input) {
@@ -29,6 +30,13 @@ export default function LookupBox(props) {
       <Form.Label forHtml={`${id}-box`}>{label}</Form.Label>
       <Form.Control id={`${id}-box`} value={value}
         onFocus={() => setListOpen(true)}
+        onBlur={event => {
+          if (! event.target.value && wasSelected) {
+            receiveChange("");
+            setListOpen(false);
+            setWasSelected(false);
+          }
+        }}
         onChange={event => {
           setValue(event.target.value);
           load(event.target.value);
@@ -39,6 +47,7 @@ export default function LookupBox(props) {
           <select className='form-select' multiple onChange={event => {
             receiveChange(event.target.value);
             setValue(event.target.selectedOptions[0].text);
+            setWasSelected(true);
             setListOpen(false);
           }}>
             {options.map(line => <option key={line.value} value={line.value}>{line.text}</option>)}
