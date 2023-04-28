@@ -25,9 +25,7 @@ export default function OurSidebar(props) {
                         <img src="/college_compendium.svg"
                             style={{ height: "1.5em", "padding-left": "1rem" }}
                             alt="The CollegeCompendium logo" />
-                        <div style={{ height: "1.5em" }}>
-                            <span style={textStyle}>College<br />Compendium</span>
-                        </div>
+                        
                     </Sidebar.Brand>
                     <Sidebar.Toggle />
                 </Sidebar.Header>
