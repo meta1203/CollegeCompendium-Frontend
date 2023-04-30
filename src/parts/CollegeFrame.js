@@ -25,7 +25,11 @@ export default function CollegeFrame(props) {
         </ListGroup.Item>
         : undefined
       }
+
+      <ListGroup.Item><a href={college.url}>{college.url}</a></ListGroup.Item>
       <ListGroup.Item>{college.description}</ListGroup.Item>
+      <ListGroup.Item>{college.location.address}</ListGroup.Item>
+      <ListGroup.Item>{college.phoneNumber}</ListGroup.Item>
     </ListGroup>
   </Card>;
 }

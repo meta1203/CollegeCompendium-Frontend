@@ -80,12 +80,12 @@ export default function Search(props) {
         </Col>
       </Row>
       <hr />
-      <Row>
+      {<Row>
         {colleges.map(college =>
-          <Col key={college.id} xs="12" md="6" lg="4" style={{ height: "33vh" }}>
+          <Col key={college.id} xs="12" md="6" lg="4" style={{paddingBottom: "12px"}}>
             <CollegeFrame college={college} />
           </Col>)}
-      </Row>
+      </Row>}
     </>
   );
 }
