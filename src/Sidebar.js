@@ -39,10 +39,10 @@ export default function OurSidebar(props) {
                                         <Sidebar.Nav.Icon><MdSchool /></Sidebar.Nav.Icon>
                                         <Sidebar.Nav.Title>Manage School</Sidebar.Nav.Title>
                                     </Sidebar.Nav.Link>
-                                    <Sidebar.Nav.Link as={Link} to="/interested">
+                                    {/* <Sidebar.Nav.Link as={Link} to="/interested">
                                         <Sidebar.Nav.Icon><MdFavorite /></Sidebar.Nav.Icon>
                                         <Sidebar.Nav.Title>Interested Students</Sidebar.Nav.Title>
-                                    </Sidebar.Nav.Link>
+                            </Sidebar.Nav.Link> */}
                                 </>
                                 :
                                 <>

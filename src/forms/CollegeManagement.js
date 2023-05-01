@@ -60,182 +60,191 @@ export default function CollegeManagement() {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Alert variant="primary">
-        <Alert.Heading>Welcome to your college page!</Alert.Heading>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Alert variant="primary">
+          <Alert.Heading>Welcome to your college page!</Alert.Heading>
 
+          <hr />
+          <p>
+            Here you can edit your college's information.
+          </p>
+        </Alert>
         <hr />
-        <p>
-          Here you can edit your college's information.
-        </p>
-      </Alert>
-      <hr />
-      <Row className="mb-3">
-        <h2> Your college's information</h2>
-        <Form.Group as={Col} >
-          <Form.Label>College Name</Form.Label>
-          <Form.Control id="name" value={college.name} onChange={handleObjChange} />
-        </Form.Group>
-      </Row>
+        <Row className="mb-3">
+          <h2> Your college's information</h2>
+          <Form.Group as={Col} >
+            <Form.Label>College Name</Form.Label>
+            <Form.Control id="name" value={college.name} onChange={handleObjChange} />
+          </Form.Group>
+        </Row>
 
-      <Row className="mb-3">
-        <Form.Group as={Col} >
-          <Form.Label>College Website</Form.Label>
-          <Form.Control id="url" value={college.url} onChange={handleObjChange} />
-        </Form.Group>
-      </Row>
+        <Row className="mb-3">
+          <Form.Group as={Col} >
+            <Form.Label>College Website</Form.Label>
+            <Form.Control id="url" value={college.url} onChange={handleObjChange} />
+          </Form.Group>
+        </Row>
 
-      <Row className="mb-3">
-        <Form.Group as={Col} >
-          <Form.Label>In-State Cost</Form.Label>
-          <Form.Control id="inStateCost" value={college.inStateCost} onChange={handleObjChange} />
-        </Form.Group>
+        <Row className="mb-3">
+          <Form.Group as={Col} >
+            <Form.Label>In-State Cost</Form.Label>
+            <Form.Control id="inStateCost" value={college.inStateCost} onChange={handleObjChange} />
+          </Form.Group>
 
-        <Form.Group as={Col} >
-          <Form.Label>Out-State Cost</Form.Label>
-          <Form.Control id="outStateCost" value={college.outStateCost} onChange={handleObjChange} />
-        </Form.Group>
-      </Row>
+          <Form.Group as={Col} >
+            <Form.Label>Out-State Cost</Form.Label>
+            <Form.Control id="outStateCost" value={college.outStateCost} onChange={handleObjChange} />
+          </Form.Group>
+        </Row>
 
-      <Row className="mb-3">
-        <Form.Group as={Col} >
-          <Form.Label>Address</Form.Label>
-          <Form.Control id="address" value={college.location.address} onChange={event => setCollege({
-            ...college,
-            location: {
-              address: event.target.value,
-              latitude: 0,
-              longitude: 0
-            },
-          })} />
-        </Form.Group>
-      </Row>
-      <hr />
+        <Row className="mb-3">
+          <Form.Group as={Col} >
+            <Form.Label>Address</Form.Label>
+            <Form.Control id="address" value={college.location.address} onChange={event => setCollege({
+              ...college,
+              location: {
+                address: event.target.value,
+                latitude: 0,
+                longitude: 0
+              },
+            })} />
+          </Form.Group>
+        </Row>
 
-      <Row className="mb-3">
-        <Col xs="6">
-          <Card>
-            <ListGroup variant='flush'>
-              <ListGroup.Item>
-                <b>Photos</b>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col xs="10" md="11">
-                    <Form.Group>
-                      <Form.Label>URL:</Form.Label>
-                      <Form.Control id="url" value={url} onChange={handleURLChange} />
-                    </Form.Group>
-                  </Col>
+        <Row className="mb-3">
+          <Form.Group as={Col} >
+            <Form.Label>School Description</Form.Label>
+            <textarea className="form-control" rows="4" id="description" value={college.description} onChange={handleObjChange} />
+          </Form.Group>
+        </Row>
+        <hr />
 
-                  <Col xs="2" md="1">
-                    <Form.Group>
-                      <Form.Label className="text-muted">Add:</Form.Label>
-                      <br />
-                      <Button variant="dark" type="text" onClick={addURL}>+</Button>
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              {college.photos.map(i =>
+        <Row className="mb-3">
+          <Col xs="6">
+            <Card>
+              <ListGroup variant='flush'>
                 <ListGroup.Item>
-                  <img src={i} width="400px" height="auto" />
+                  <b>Photos</b>
                 </ListGroup.Item>
-              )}
-            </ListGroup>
-          </Card>
-        </Col>
-
-        <Col>
-          <Card>
-            <ListGroup variant='flush'>
-              <ListGroup.Item>
-                <b>Degrees</b>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Form>
+                <ListGroup.Item>
                   <Row>
-                    <Col xs="6">
-                      <LookupBox id="major" label="Major"
-                        receiveChange={majorId => {
-                          searchMajorForId(majorId).then(m =>
-                            setDegree({
-                              ...degree,
-                              major: m
-                            })
-                          );
-                        }}
-                        getOptions={async v => {
-                          const majors = await searchMajorsForName(v);
-                          return majors.map(m => {
-                            return { value: m.id, text: m.name };
-                          });
-                        }} />
-                    </Col>
-                    <Col xs="3">
+                    <Col xs="10" md="11">
                       <Form.Group>
-                        <Form.Label forHtml="degreeType">Degree Offered:</Form.Label>
-                        <Form.Select id="degreeType" value={degree.degreeType} onChange={handleDegreeChange}>
-                          <option selected value="ASSOCIATE">Associate's</option>
-                          <option value="BACHELOR">Bachelor's</option>
-                          <option value="MASTER">Master's</option>
-                          <option value="DOCTORATE">Doctorate</option>
-                        </Form.Select>
+                        <Form.Label>URL:</Form.Label>
+                        <Form.Control id="url" value={url} onChange={handleURLChange} />
                       </Form.Group>
                     </Col>
-                    <Col xs="2">
-                      <Form.Group>
-                        <Form.Label forHtml="creditsRequired">Credit Hours:</Form.Label>
-                        <Form.Control id="creditsRequired" value={degree.creditsRequired} onChange={handleDegreeChange} type="number" />
-                      </Form.Group>
-                    </Col>
-                    <Col xs="1">
-                      <Form.Group>
-                        <Form.Label>Add:</Form.Label>
-                        <Button variant="primary" type="submit"
-                          onClick={event => {
-                            event.preventDefault();
 
-                            console.log(degree);
-                            addDegreeToCollege(degree).then(d => {
-                              let updatedCollege = { ...college };
-                              updatedCollege.degrees.push(d);
-                              setCollege(updatedCollege);
-                              setDegree({});
+                    <Col xs="2" md="1">
+                      <Form.Group>
+                        <Form.Label className="text-muted">Add:</Form.Label>
+                        <br />
+                        <Button variant="dark" type="text" onClick={addURL}>+</Button>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                {college.photos.map(i =>
+                  <ListGroup.Item>
+                    <img src={i} width="400px" height="auto" />
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            </Card>
+          </Col>
+
+          <Col>
+            <Card>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <b>Degrees</b>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Form>
+                    <Row>
+                      <Col xs="6">
+                        <LookupBox id="major" label="Major"
+                          receiveChange={majorId => {
+                            searchMajorForId(majorId).then(m =>
+                              setDegree({
+                                ...degree,
+                                major: m
+                              })
+                            );
+                          }}
+                          getOptions={async v => {
+                            const majors = await searchMajorsForName(v);
+                            return majors.map(m => {
+                              return { value: m.id, text: m.name };
                             });
-                          }}>+</Button>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </Form>
-              </ListGroup.Item>
-              {college.degrees.map((d, i) =>
-                <ListGroup.Item key={d.id}>
-                  <Row>
-                    <Col xs="6"><b>{d.major.name}</b></Col>
-                    <Col xs="3">{d.degreeType}</Col>
-                    <Col xs="2">{d.creditsRequired}</Col>
-                    <Col xs="1"><Button variant="danger" onClick={event => {
-                      event.preventDefault();
+                          }} />
+                      </Col>
+                      <Col xs="3">
+                        <Form.Group>
+                          <Form.Label forHtml="degreeType">Degree Offered:</Form.Label>
+                          <Form.Select id="degreeType" value={degree.degreeType} onChange={handleDegreeChange}>
+                            <option selected value="ASSOCIATE">Associate's</option>
+                            <option value="BACHELOR">Bachelor's</option>
+                            <option value="MASTER">Master's</option>
+                            <option value="DOCTORATE">Doctorate</option>
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col xs="2">
+                        <Form.Group>
+                          <Form.Label forHtml="creditsRequired">Credit Hours:</Form.Label>
+                          <Form.Control id="creditsRequired" value={degree.creditsRequired} onChange={handleDegreeChange} type="number" />
+                        </Form.Group>
+                      </Col>
+                      <Col xs="1">
+                        <Form.Group>
+                          <Form.Label>Add:</Form.Label>
+                          <Button variant="primary" type="submit"
+                            onClick={event => {
+                              event.preventDefault();
 
-                      removeDegreeFromCollege(d.id).then(() => {
-                        let updatedCollege = { ...college };
-                        updatedCollege.degrees = college.degrees.filter((v, i2) => i != i2);
-                        setCollege(updatedCollege);
-                      });
-
-                    }}><BsTrashFill /></Button></Col>
-                  </Row>
+                              console.log(degree);
+                              addDegreeToCollege(degree).then(d => {
+                                let updatedCollege = { ...college };
+                                updatedCollege.degrees.push(d);
+                                setCollege(updatedCollege);
+                                setDegree({});
+                              });
+                            }}>+</Button>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                  </Form>
                 </ListGroup.Item>
-              )}
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
-      <hr />
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button>
+                {college.degrees.map((d, i) =>
+                  <ListGroup.Item key={d.id}>
+                    <Row>
+                      <Col xs="6"><b>{d.major.name}</b></Col>
+                      <Col xs="3">{d.degreeType}</Col>
+                      <Col xs="2">{d.creditsRequired}</Col>
+                      <Col xs="1"><Button variant="danger" onClick={event => {
+                        event.preventDefault();
+
+                        removeDegreeFromCollege(d.id).then(() => {
+                          let updatedCollege = { ...college };
+                          updatedCollege.degrees = college.degrees.filter((v, i2) => i != i2);
+                          setCollege(updatedCollege);
+                        });
+
+                      }}><BsTrashFill /></Button></Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+        <hr />
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
+          Submit
+        </Button>
+      </Form>
       <hr />
       <div>
         <h3>Approve another collge admin:</h3>
@@ -257,6 +266,7 @@ export default function CollegeManagement() {
           <div style={{ width: "33%" }}><CollegeFrame college={college} /></div>
         </Col>
       </Row>
-    </Form>
+
+    </>
   );
 }
