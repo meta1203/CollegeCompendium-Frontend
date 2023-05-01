@@ -60,6 +60,14 @@ export default function useAPI() {
 
   }, [isLoading, isAuthenticated, getAccessTokenSilently]);
 
+  function isFavorite(id) {
+    if ((typeof userState.approved) !== "undefined") return false;
+    for (let c of userState.favoriteColleges) {
+      if (c.id === id) return true;
+    }
+    return false;
+  }
+
   // build API hook object
   return {
     // user object should always reflect what the
@@ -263,6 +271,27 @@ export default function useAPI() {
         })
       ).then(resp => {
         if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+      });
+    },
+
+    isFavorite,
+
+    toggleFavorite: async function (degreeId) {
+      const isFav = isFavorite(degreeId);
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/student/favorite/" + degreeId, {
+          method: isFav ? "DELETE" : "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (!resp.ok) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      }).then(s => {
+        setUser(s);
+        return s;
       });
     }
   };

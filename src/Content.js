@@ -7,6 +7,7 @@ import PlaceholderIframe from './PlaceholderIframe';
 import HomePage from "./forms/HomePage"
 import useAPI from "./useAPI";
 import Search from "./Search";
+import Favorites from "./Favorites";
 
 export default function Content(props) {
     const { user } = useAPI();
@@ -42,7 +43,7 @@ export default function Content(props) {
                             <ProfileManagement/>
                         } />
                         <Route path="/favorites" element={
-                            <PlaceholderIframe src="https://public.meta1203.com/videos/one_through_ten.mp4" />
+                            <Favorites />
                         } />
                         </>}
                         
