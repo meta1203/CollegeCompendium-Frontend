@@ -260,6 +260,22 @@ export default function useAPI() {
       });
     },
 
+    approveOtherAdmin: async function (email) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/approve/" + email, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 404) alert("Email not found.");
+        else if (resp.status === 200) alert("Successfully approved " + email);
+        else alert(`Invalid response ${resp.status}`);
+      });
+    },
+
     removeDegreeFromCollege: async function (degreeId) {
       return getAccessTokenSilently().then(token =>
         fetch(API_BASE + "/collegeAdmin/college/degree/" + degreeId, {

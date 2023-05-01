@@ -9,7 +9,7 @@ import { BsTrashFill } from "react-icons/bs";
 
 import { useState } from 'react';
 import useAPI from '../useAPI';
-import { Card, Container, ListGroup } from 'react-bootstrap';
+import { Card, Container, FormGroup, ListGroup } from 'react-bootstrap';
 
 export default function CollegeManagement() {
   const {
@@ -18,7 +18,8 @@ export default function CollegeManagement() {
     searchMajorsForName,
     searchMajorForId,
     addDegreeToCollege,
-    removeDegreeFromCollege
+    removeDegreeFromCollege,
+    approveOtherAdmin
   } = useAPI();
 
   const [college, setCollege] = useState(user.college);
@@ -235,6 +236,20 @@ export default function CollegeManagement() {
       <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
+      <hr />
+      <div>
+        <h3>Approve another collge admin:</h3>
+        <br />
+        <Form.Group>
+          <Form.Label forHtml="approve">Email address:</Form.Label>
+          <Form.Control id="approve" />
+        </Form.Group>
+        <br />
+        <Button onClick={event => {
+          event.preventDefault();
+          approveOtherAdmin(document.getElementById("approve").value);
+        }}>Approve...</Button>
+      </div>
       <hr />
       <Row>
         <Col>

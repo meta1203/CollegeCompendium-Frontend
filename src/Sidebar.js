@@ -22,10 +22,11 @@ export default function OurSidebar(props) {
             <Sidebar.Collapse>
                 <Sidebar.Header>
                     <Sidebar.Brand>
+                        <Link to="/">
                         <img src="/college_compendium.svg"
                             style={{ height: "1.5em", "padding-left": "1rem" }}
                             alt="The CollegeCompendium logo" />
-                        
+                        </Link>
                     </Sidebar.Brand>
                     <Sidebar.Toggle />
                 </Sidebar.Header>
