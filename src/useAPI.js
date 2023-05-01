@@ -60,6 +60,14 @@ export default function useAPI() {
 
   }, [isLoading, isAuthenticated, getAccessTokenSilently]);
 
+  function isFavorite(id) {
+    if ((typeof userState.approved) !== "undefined") return false;
+    for (let c of userState.favoriteColleges) {
+      if (c.id === id) return true;
+    }
+    return false;
+  }
+
   // build API hook object
   return {
     // user object should always reflect what the
@@ -83,7 +91,6 @@ export default function useAPI() {
         setUser(remoteStudent);
         return remoteStudent;
       });
-
     },
 
     createStudent: async function (studentObj) {
@@ -106,11 +113,11 @@ export default function useAPI() {
 
     },
 
-    createAdmin: async function (studentObj) {
+    createAdmin: async function (caObj) {
       return getAccessTokenSilently().then(token => {
-        return fetch(API_BASE + "/admin", {
+        return fetch(API_BASE + "/collegeAdmin", {
           method: "POST",
-          body: JSON.stringify(studentObj),
+          body: JSON.stringify(caObj),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -123,7 +130,185 @@ export default function useAPI() {
         setUser(remoteAdmin);
         return remoteAdmin;
       });
-
     },
+
+    updateCollege: async function (collegeObject) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/collegeAdmin/college", {
+          method: "PUT",
+          body: JSON.stringify(collegeObject),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      }).then(resp => {
+        if (!resp.ok) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      }).then(remoteCollege => {
+        setUser({
+          ...userState,
+          college: remoteCollege
+        });
+        return remoteCollege;
+      });
+    },
+
+    searchCollegeForName: async function (collegeName) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/search/colleges?name=" + collegeName, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchCollegesNearby: async function (distance) {
+      return getAccessTokenSilently().then(token => {
+        return fetch(API_BASE + "/search/colleges/distance/" + distance, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      }).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchCollegeForId: async function (collegeId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/college/" + collegeId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchCollegeForMajor: async function (majorId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/colleges/major?id=" + majorId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchMajorsForName: async function (majorName) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/majors?name=" + majorName, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    searchMajorForId: async function (majorId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/search/major?id=" + majorId, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    addDegreeToCollege: async function (degreeObj) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/college/degree", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(degreeObj)
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      });
+    },
+
+    approveOtherAdmin: async function (email) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/approve/" + email, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 404) alert("Email not found.");
+        else if (resp.status === 200) alert("Successfully approved " + email);
+        else alert(`Invalid response ${resp.status}`);
+      });
+    },
+
+    removeDegreeFromCollege: async function (degreeId) {
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/collegeAdmin/college/degree/" + degreeId, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (resp.status === 500) throw new Error(`Invalid response ${resp.status}`);
+      });
+    },
+
+    isFavorite,
+
+    toggleFavorite: async function (degreeId) {
+      const isFav = isFavorite(degreeId);
+      return getAccessTokenSilently().then(token =>
+        fetch(API_BASE + "/student/favorite/" + degreeId, {
+          method: isFav ? "DELETE" : "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        })
+      ).then(resp => {
+        if (!resp.ok) throw new Error(`Invalid response ${resp.status}`);
+        return resp.json();
+      }).then(s => {
+        setUser(s);
+        return s;
+      });
+    }
   };
 }

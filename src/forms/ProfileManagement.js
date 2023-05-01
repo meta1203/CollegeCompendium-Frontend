@@ -13,19 +13,7 @@ export default function (props) {
         updateStudent
     } = useAPI();
 
-    const [currentUser, setCurrentUser] = useState({
-        email: user.email,
-        firstName: user.firstName,
-        middleInitial: user.middleInitial,
-        lastName: user.lastName,
-        username: user.username,
-        city: user.city,
-        state: user.state,
-        highschool: user.highschool,
-        college: user.college,
-        actScore: user.actScore,
-        satScore: user.satScore,
-      });
+    const [currentUser, setCurrentUser] = useState(user);
 
       function handleStudentChange(event) {
         event.preventDefault();
@@ -58,9 +46,9 @@ export default function (props) {
         </Alert>
       <Row className="mb-3">
         <h2> Your information</h2>
-        <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Group as={Col} >
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" value={currentUser.email}id="email" onChange={handleStudentChange} />
+          <Form.Control type="email" value={currentUser.email} id="email" onChange={handleStudentChange} />
           <Form.Text className="text-muted">
           </Form.Text>
         </Form.Group>
@@ -69,17 +57,17 @@ export default function (props) {
       <hr/>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridName">
+        <Form.Group as={Col} >
           <Form.Label>First Name</Form.Label>
           <Form.Control id="firstName" value={currentUser.firstName} onChange={handleStudentChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridState">
+        <Form.Group as={Col} >
           <Form.Label>Middle Initial</Form.Label>
           <Form.Control id="middleInitial" value={currentUser.middleInitial} onChange={handleStudentChange} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridZip">
+        <Form.Group as={Col} >
           <Form.Label>Last Name</Form.Label>
           <Form.Control id="lastName" value={currentUser.lastName} onChange={handleStudentChange} />
         </Form.Group>
@@ -88,34 +76,38 @@ export default function (props) {
       <hr/>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City</Form.Label>
-          <Form.Control value={currentUser.city} onChange={handleStudentChange} />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label>State</Form.Label>
-          <Form.Control value={currentUser.state} onChange={handleStudentChange} />
+        <Form.Group as={Col} >
+          <Form.Label>Address</Form.Label>
+          <Form.Control id="address" value={currentUser.location.address} onChange={event => {
+            let updatedUser = {...currentUser};
+            updatedUser.location = {
+              address: event.target.value,
+              latitude: 0,
+              longitude: 0
+            };
+            setCurrentUser(updatedUser);
+          }} />
         </Form.Group>
       </Row>
       <hr />
+
       <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} >
             <Form.Label>High school</Form.Label>
             <Form.Control id="highschool" value={currentUser.highschool} onChange={handleStudentChange} />
           </Form.Group>
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} >
             <Form.Label>College</Form.Label>
             <Form.Control id="college" value={currentUser.college} onChange={handleStudentChange} />
           </Form.Group>
         </Row>
         <hr/>
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} >
             <Form.Label>ACT Score</Form.Label>
             <Form.Control id="actScore" value={currentUser.actScore} onChange={handleStudentChange} />
           </Form.Group>
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} >
             <Form.Label>SAT Score</Form.Label>
             <Form.Control id="satScore" value={currentUser.satScore} onChange={handleStudentChange} />
           </Form.Group>

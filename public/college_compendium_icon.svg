@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   viewBox="0 89.935 1152.435 250.441"
+   width="70.091248mm"
+   height="30.305073mm"
+   viewBox="0 0 70.091248 30.305073"
    version="1.1"
-   id="svg13"
-   sodipodi:docname="Untitled_1.svg"
+   id="svg5"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="college_compendium.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs17" />
   <sodipodi:namedview
-     id="namedview15"
+     id="namedview7"
      pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.0655698"
-     inkscape:cx="416.20924"
-     inkscape:cy="124.81585"
+     inkscape:zoom="4.1625654"
+     inkscape:cx="144.02176"
+     inkscape:cy="47.446702"
      inkscape:window-width="1920"
-     inkscape:window-height="1059"
-     inkscape:window-x="1919"
+     inkscape:window-height="1006"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg13" />
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
   <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
      id="layer1"
-     transform="matrix(8.056689, 0, 0, 8.459972, -223.065384, 18.877907)"
-     style="">
+     transform="translate(-27.6678,-8.035181)">
     <g
        id="g4010-3"
        transform="translate(29.083348,0.11356715)">
@@ -44,7 +50,8 @@
       <path
          style="fill:#0063ff;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          d="M 39.708713,18.408694 H 54.032612 V 8.3633179 L 68.490379,23.379508 53.966228,37.907251 V 27.348 H 39.711473 Z"
-         id="path113-7" />
+         id="path113-7"
+         sodipodi:nodetypes="cccccccc" />
     </g>
     <g
        id="g4010">
@@ -55,17 +62,8 @@
       <path
          style="fill:#0063ff;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
          d="M 39.708713,18.408694 H 54.032612 V 8.3633179 L 68.490379,23.379508 53.966228,37.907251 V 27.348 H 39.711473 Z"
-         id="path113" />
+         id="path113"
+         sodipodi:nodetypes="cccccccc" />
     </g>
   </g>
-  <text
-     style="fill:rgb(51, 51, 51);font-family:Arial, sans-serif;font-size:100px;font-weight:700;white-space:pre;stroke:#ffffff;stroke-width:8;stroke-dasharray:none;paint-order:stroke fill markers"
-     x="512.91"
-     y="187.5"
-     id="text9">College</text>
-  <text
-     style="fill:rgb(51, 51, 51);font-family:Arial, sans-serif;font-size:100px;font-weight:700;white-space:pre;stroke:#ffffff;paint-order:stroke fill markers;stroke-width:8;stroke-dasharray:none"
-     x="510.125"
-     y="321.156"
-     id="text11">Compendium</text>
 </svg>
